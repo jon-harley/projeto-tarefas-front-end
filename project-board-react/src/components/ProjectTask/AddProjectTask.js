@@ -1,43 +1,43 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import PropTypes from "prop-types"
-import {connect} from "react-redux"
-import {addProjectTask} from "../../actions/projectTaskActions"
-import classnames from "classnames"
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { addProjectTask } from "../../actions/projectTaskActions";
+import classnames from "classnames";
 
 class AddProjectTask extends Component {
-  constructor(){
+  constructor() {
     super();
-      this.state = {
-        summary: "",
-        acceptanceCriteria: "",
-        status: "",
-        errors: {}
-      };
-      this.onChange = this.onChange.bind(this);
-      this.onSubmit = this.onSubmit.bind(this);
+    this.state = {
+      summary: "",
+      acceptanceCriteria: "",
+      status: "",
+      errors: {}
+    };
+    this.onChange = this.onChange.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
   }
   componentWillReceiveProps(nextProps) {
-    if(nextProps.errors){
-      this.setState({ errors: nextProps.errors});
+    if (nextProps.errors) {
+      this.setState({ errors: nextProps.errors });
     }
   }
 
-  onChange(e){
-    this.setState({ [e.target.name]:e.target.value })
+  onChange(e) {
+    this.setState({ [e.target.name]: e.target.value });
   }
 
-  onSubmit(e){ 
-    e.preventDefault()
+  onSubmit(e) {
+    e.preventDefault();
     const newProjectTask = {
-        summary: this.state.summary,
-        acceptanceCriteria: this.state.acceptanceCriteria,
-        status: this.state.status
+      summary: this.state.summary,
+      acceptanceCriteria: this.state.acceptanceCriteria,
+      status: this.state.status
     };
-    //console.log(newProjectTask);
-    this.props.addProjectTask(newProjectTask, this.props.history)
+    // console.log(newProjectTask);
+    this.props.addProjectTask(newProjectTask, this.props.history);
   }
-  
+
   render() {
     const { errors } = this.state;
     return (
@@ -46,10 +46,10 @@ class AddProjectTask extends Component {
           <div className="row">
             <div className="col-md-8 m-auto">
               <Link to="/" className="btn btn-light">
-                Back to Board
+                Voltar para Dashboard
               </Link>
               <h4 className="display-4 text-center">
-                Add /Update Project Task
+                Adicionar / Atualizar Tarefas
               </h4>
               <form onSubmit={this.onSubmit}>
                 <div className="form-group">
@@ -60,17 +60,17 @@ class AddProjectTask extends Component {
                     })}
                     name="summary"
                     value={this.state.summary}
-                    placeholder="Project Task summary"
+                    placeholder="Resumo da Tarefa do Projeto"
                     onChange={this.onChange}
-                    />
-                    {errors.summary && (
-                        <div className="invalid-feedback">{errors.summary}</div>
-                      )}
+                  />
+                  {errors.summary && (
+                    <div className="invalid-feedback">{errors.summary}</div>
+                  )}
                 </div>
                 <div className="form-group">
                   <textarea
                     className="form-control form-control-lg"
-                    placeholder="Acceptance Criteria"
+                    placeholder="Critérios de aceitação"
                     name="acceptanceCriteria"
                     value={this.state.acceptanceCriteria}
                     onChange={this.onChange}
@@ -83,10 +83,10 @@ class AddProjectTask extends Component {
                     value={this.state.status}
                     onChange={this.onChange}
                   >
-                    <option value="">Select Status</option>
-                    <option value="TO_DO">TO DO</option>
-                    <option value="IN_PROGRESS">IN PROGRESS</option>
-                    <option value="DONE">DONE</option>
+                    <option value="">Selecione o Status</option>
+                    <option value="TO_DO">A Fazer</option>
+                    <option value="IN_PROGRESS">Em Progresso</option>
+                    <option value="DONE">Feito</option>
                   </select>
                 </div>
                 <input
@@ -102,15 +102,16 @@ class AddProjectTask extends Component {
   }
 }
 
-AddProjectTask.PropTypes = {
+AddProjectTask.propTypes = {
   addProjectTask: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired
-}
-
+};
 
 const mapStateToProps = state => ({
   errors: state.errors
-})
+});
 
-
-export default connect(mapStateToProps, {addProjectTask}) (AddProjectTask);
+export default connect(
+  mapStateToProps,
+  { addProjectTask }
+)(AddProjectTask);
